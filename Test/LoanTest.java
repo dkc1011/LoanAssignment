@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.Method;
+
 import static org.junit.Assert.*;
 
 public class LoanTest {
@@ -15,6 +17,20 @@ public class LoanTest {
 
     @Rule
     public Timeout globalTimeout = Timeout.millis(900);
+
+    @Test
+    public void getAmountTest()
+    {
+        Loan loan = new Loan(1500, 2);
+        assertEquals(1500,loan.getAmount(),0);
+    }
+
+    @Test
+    public void getPeriodTest()
+    {
+        Loan loan = new Loan(1500, 2);
+        assertEquals(2,loan.getPeriod());
+    }
 
     @Test
     public void testLoanInstance()
@@ -30,15 +46,17 @@ public class LoanTest {
     public void monthlyPaymentTest()
     {
         Loan loan3 = new Loan(10000,5);
-        assertEquals(175,loan3.getMonthlyPayment(),0);
+        assertEquals(188.7123364401099,loan3.getMonthlyPayment(),0);
     }
 
     @Test
     public void totalPaymentTest()
     {
         Loan loan1 = new Loan(2600, 3);
-        assertEquals(2860, loan1.getTotalPayment(), 0);
+        assertEquals(3020, loan1.getTotalPayment(), 0.208721343197);
     }
+
+
 
     //Positive Specification Tests
 
@@ -82,12 +100,12 @@ public class LoanTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void testCase7() {
-        Loan loan = new Loan(800, -1);
+        Loan loan = new Loan(800, 0);
     }
 
     @Test (expected = IllegalArgumentException.class)
     public void testCase8() {
-        Loan loan = new Loan(1200, 7);
+        Loan loan = new Loan(1200, 8);
     }
 
     @Test (expected = IllegalArgumentException.class)
